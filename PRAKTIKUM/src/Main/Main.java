@@ -7,6 +7,19 @@ import java.util.Scanner;
 public class Main extends Abstraksi{
     static Data data = new Data();
     
+    public void sort(int index){
+        int temp, kecil;
+            for(int i = 0; i < index ; i++){
+                kecil = i;
+                for(int j = i+1; j < index; j++){
+                    if (data.getData(j) < data.getData(kecil))
+                        kecil = j;
+                }
+                temp = data.getData(i);
+                data.setData(i, data.getData(kecil));
+                data.setData(kecil, temp);
+            }
+    }
     @Override
     public void seq_search(int cari){
         int found = -1;
@@ -25,9 +38,9 @@ public class Main extends Abstraksi{
     }
     
     @Override
-    public void bin_search(int cari){
-        int awal = 0, akhir= data.getLength()-1, found=0;
-        for(int i = 0; i < data.getLength(); i++){
+    public void bin_search(int cari, int index){
+        int awal = 0, akhir= index-1, found=-1;
+        for(int i = 0; i <= index; i++){
             int tengah = (akhir-awal)/2;
             if(data.getData(i) == cari){
                 found = i;
@@ -38,7 +51,7 @@ public class Main extends Abstraksi{
             }
         }
         
-        if(found == 0){
+        if(found == -1){
             System.out.println("\nData Tidak Ada\n");
         }else{
             System.out.println("\nData ada di index-"+found+"\n");
@@ -67,7 +80,7 @@ public class Main extends Abstraksi{
                     
                 case 2:
                     System.out.println("\nDATA");
-                    for (int i = 0; i < index; i++) {
+                    for (int i = 0; i < data.getLength(); i++) {
                         System.out.println(data.getData(i));
                     }
                     System.out.println("");
@@ -85,7 +98,8 @@ public class Main extends Abstraksi{
                             break;
                             
                         case 2:
-                            new Main().bin_search(cari);
+                            new Main().sort(index);
+                            new Main().bin_search(cari, index);
                             break;
                     }
                 break;    
